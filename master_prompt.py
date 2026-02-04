@@ -1,7 +1,13 @@
+import os
 import init_db
+from openai import OpenAI
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
 
 schema = init_db.schema_sql
 
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 
 class MasterPromptGenerator:
@@ -22,4 +28,25 @@ class MasterPromptGenerator:
 
     def clean_response(self, response: str) -> str:
         """Cleans the model's response to extract only the SQL query."""
+        # Remove markdown code blocks if present
+        response = response.strip()
+        if response.startswith("```sql"):
+            response = response[6:]
+        elif response.startswith("```"):
+            response = response[3:]
+        if response.endswith("```"):
+            response = response[:-3]
         return response.strip()
+
+    def generate_sql_query(self, user_query: str) -> str:
+        prompt = self.generate_prompt(user_query)
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": "You are a SQL expert. Only output the SQL query, nothing else."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0
+        )
+        sql_query = self.clean_response(response.choices[0].message.content)
+        return sql_query

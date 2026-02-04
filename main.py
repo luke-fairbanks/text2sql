@@ -37,8 +37,9 @@ def main():
         if user_input.lower() == 'exit':
             break
         try:
-            prompt = generator.generate_prompt(user_input)
-            results = execute_query(prompt)
+            sql_query = generator.generate_sql_query(user_input)
+            print(f"Generated SQL: {sql_query}")
+            results = execute_query(sql_query)
             for row in results:
                 print(row)
         except Exception as e:
