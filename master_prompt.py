@@ -41,7 +41,7 @@ class MasterPromptGenerator:
     def generate_sql_query(self, user_query: str) -> str:
         prompt = self.generate_prompt(user_query)
         response = client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-3.5-turbo-1106",
             messages=[
                 {"role": "system", "content": "You are a SQL expert. Only output the SQL query, nothing else."},
                 {"role": "user", "content": prompt}
