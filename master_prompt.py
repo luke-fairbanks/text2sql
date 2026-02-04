@@ -1,11 +1,11 @@
 import os
-import init_db
+import table
 from openai import OpenAI
 from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 
-schema = init_db.schema_sql
+schema = table.schema_sql
 
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
