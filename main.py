@@ -23,5 +23,28 @@ rows = cursor.fetchall()
 for row in rows:
     print(row)
 
+def execute_query(query):
+    cursor.execute(query)
+    return cursor.fetchall()
+
+def main():
+    print("Welcome to the Restaurant Management CLI!")
+    print("Type 'exit' to quit.")
+    while True:
+        user_input = input("Enter your SQL query: ")
+        if user_input.lower() == 'exit':
+            break
+        try:
+            results = execute_query(user_input)
+            for row in results:
+                print(row)
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            conn.rollback()  # Reset the transaction after an error
+
+if __name__ == "__main__":
+    main()
+
+
 cursor.close()
 conn.close()
