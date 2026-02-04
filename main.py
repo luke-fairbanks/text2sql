@@ -13,17 +13,6 @@ if not TIMESCALE_SERVICE_URL:
 conn = psycopg2.connect(dsn=TIMESCALE_SERVICE_URL)
 cursor = conn.cursor()
 
-cursor.execute("""
-SELECT o.order_id, o.order_type, c.name AS customer, s.name AS staff, o.status
-FROM restaurant_order o
-LEFT JOIN customer c ON c.customer_id = o.customer_id
-LEFT JOIN staff s ON s.staff_id = o.staff_id
-ORDER BY o.order_id;
-""")
-rows = cursor.fetchall()
-for row in rows:
-    print(row)
-
 def execute_query(query):
     cursor.execute(query)
     return cursor.fetchall()
@@ -32,12 +21,13 @@ def main():
     print("Welcome to the Restaurant Management CLI!")
     print("Type 'exit' to quit.")
     generator = MasterPromptGenerator()
+
     while True:
         user_input = input("Enter your question: ")
         if user_input.lower() == 'exit':
             break
         try:
-            sql_query = generator.generate_sql_query(user_input)
+            sql_query = generator.generate_sql_query(user_input, cursor)
             print(f"Generated SQL: {sql_query}")
             results = execute_query(sql_query)
             for row in results:
