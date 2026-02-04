@@ -1,6 +1,7 @@
 import os
 import psycopg2
 from dotenv import load_dotenv, find_dotenv
+from master_prompt import MasterPromptGenerator
 
 load_dotenv(find_dotenv())
 
@@ -30,12 +31,14 @@ def execute_query(query):
 def main():
     print("Welcome to the Restaurant Management CLI!")
     print("Type 'exit' to quit.")
+    generator = MasterPromptGenerator()
     while True:
-        user_input = input("Enter your SQL query: ")
+        user_input = input("Enter your question: ")
         if user_input.lower() == 'exit':
             break
         try:
-            results = execute_query(user_input)
+            prompt = generator.generate_prompt(user_input)
+            results = execute_query(prompt)
             for row in results:
                 print(row)
         except Exception as e:

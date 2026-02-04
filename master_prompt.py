@@ -6,7 +6,7 @@ schema = init_db.schema_sql
 
 class MasterPromptGenerator:
 
-    def get_db_schema_create_table():
+    def get_db_schema_create_table(self):
         """Technique: CreateTable (Standard DDL)"""
         return schema.strip()
 
