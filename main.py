@@ -29,12 +29,14 @@ def main():
         try:
             sql_query = generator.generate_sql_query(user_input, cursor)
             print(f"Generated SQL: {sql_query}")
-            results = execute_query(sql_query)
-            for row in results:
-                print(row)
+            sql_results = execute_query(sql_query)
+            report = generator.generate_friendly_report(user_input, sql_query, sql_results)
+            print("\n" + "="*50)
+            print(report)
+            print("="*50 + "\n")
         except Exception as e:
             print(f"An error occurred: {e}")
-            conn.rollback()  # Reset the transaction after an error
+            conn.rollback()
 
 if __name__ == "__main__":
     main()
