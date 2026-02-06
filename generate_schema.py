@@ -34,30 +34,30 @@ def setup_schemacrawler():
     if os.path.exists(SC_EXECUTABLE):
         os.chmod(SC_EXECUTABLE, 0o755)
         return SC_EXECUTABLE
-    
+
     # Check if global schemacrawler exists
     if shutil.which("schemacrawler"):
         return "schemacrawler"
 
     print(f"⬇️  SchemaCrawler not found. Downloading v{SC_VERSION}...")
-    
+
     zip_path = os.path.join(os.getcwd(), "schemacrawler.zip")
-    
+
     try:
         # Download
         with urllib.request.urlopen(SC_URL) as response, open(zip_path, 'wb') as out_file:
             shutil.copyfileobj(response, out_file)
-        
+
         print("📦 Extracting SchemaCrawler...")
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
             zip_ref.extractall(SC_DIR)
-            
+
         # Cleanup zip
         os.remove(zip_path)
-        
+
         # Make executable
         os.chmod(SC_EXECUTABLE, 0o755)
-        
+
         print(f"✅ SchemaCrawler installed to {SC_DIR}")
         return SC_EXECUTABLE
 
@@ -83,9 +83,9 @@ def run_schemacrawler():
     except Exception as e:
         print(f"Error parsing URL: {e}")
         exit(1)
-        
+
     sc_cmd = setup_schemacrawler()
-    
+
     # Construct SchemaCrawler command
     # Filter to only show our application tables in the public schema
     # Regex matches: public followed by one of our table names
