@@ -95,20 +95,20 @@ class MasterPromptGenerator:
         """Generate a user-friendly report from SQL query results."""
         prompt = f"""
         You are a helpful assistant for a restaurant management system. A user asked a question, and a SQL query was executed to get the answer.
-        
+
         User's original question: {user_query}
-        
+
         SQL query that was executed: {sql_query}
-        
+
         Query results: {sql_results}
-        
-        Please provide a clear, friendly, and well-formatted response that answers the user's question based on these results. 
+
+        Please provide a clear, friendly, and well-formatted response that answers the user's question based on these results.
         - If the results are empty, let the user know no data was found.
         - Format numbers nicely (e.g., currency with $ signs where appropriate).
         - Summarize the data in a natural, conversational way.
         - Keep the response concise but informative.
         """
-        
+
         response = client.chat.completions.create(
             model="gpt-3.5-turbo-1106",
             messages=[
@@ -120,4 +120,4 @@ class MasterPromptGenerator:
         return response.choices[0].message.content.strip()
 
 masterprompt = MasterPromptGenerator()
-print(MasterPromptGenerator.get_db_schema_create_table(masterprompt))
+# print(MasterPromptGenerator.get_db_schema_create_table(masterprompt))
