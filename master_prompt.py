@@ -78,8 +78,8 @@ class MasterPromptGenerator:
 
     def generate_sql_query(self, user_query: str, cursor) -> str:
         prompt = self.generate_prompt(user_query, cursor)
-        print("Generated Prompt for LLM:")
-        print(prompt)
+        # print("Generated Prompt for LLM:")
+        # print(prompt)
         response = client.chat.completions.create(
             model="gpt-3.5-turbo-1106",
             messages=[
