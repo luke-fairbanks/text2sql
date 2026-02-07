@@ -128,3 +128,11 @@ Hey there! It looks like we've got the info you need. On February 1st, 2026, the
 Looks like everyone was busy that day! If you have any more questions or need further details, feel free to ask!
 
 Result: It got all the correct names, but again listed them as Staff ID and not by name.
+
+# Picture of Schema
+![img](schema.png)
+
+# Description of Database
+This database models the "all-in-one" system for running a restaurant. It tracks the whole experience: from someone booking a table to paying for their order. It also handles the staff side of things, like who's working when and which server is handling which orders, and the tips made from them. It would allow a restaurant manager to be able to query any information from menu items, to staffing schedules and payments using our text-2-sql tool.
+
+# Prompting strategies:
